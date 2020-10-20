@@ -2,6 +2,7 @@ package bouquet;
 
 import java.util.List;
 
+//наследование
 public class Florist extends Employee {
     public Florist(String name, String surname, int experience, int age) {
         super(name, surname, experience, age);
@@ -21,5 +22,11 @@ public class Florist extends Employee {
         }
         bouquet.setPrice(price);
         return price;
+    }
+
+    //Полиморфизм
+    @Override
+    public String work() {
+        return super.work() + ". My profession is a florist";
     }
 }

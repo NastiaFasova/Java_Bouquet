@@ -1,5 +1,6 @@
 package bouquet;
 
+//абстрактный класс
 public abstract class Employee {
     private String name;
     private String surname;
@@ -21,5 +22,9 @@ public abstract class Employee {
                 ", experience=" + experience +
                 ", age=" + age +
                 '}';
+    }
+
+    public String work() {
+        return "I'm working ";
     }
 }

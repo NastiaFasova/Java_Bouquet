@@ -9,6 +9,7 @@ public class Main {
         Bouquet bouquet = florist.createBouquet(chooseFlowers(), new Bouquet.Wrapper(Colour.PINK));
         System.out.println(florist.createBouquet(chooseFlowers(), new Bouquet.Wrapper(Colour.PINK)));
 
+        System.out.println(florist.work());
         bouquet.showFlowers();
         bouquet.present();
     }

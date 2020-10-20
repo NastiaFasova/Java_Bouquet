@@ -5,7 +5,7 @@ import bouquet.exception.NotEnoughFlowersException;
 import java.util.Iterator;
 import java.util.List;
 
-public class Bouquet implements Presentable{
+public class Bouquet implements Presentable {//имплементация интерфейса
     private static final int MIN_NUMBER = 3;
     private List<Flower> flowers;
     private Wrapper wrapper;
@@ -13,7 +13,7 @@ public class Bouquet implements Presentable{
 
     public Bouquet(List<Flower> flowers, Wrapper wrapper, double price) {
         if (flowers.size() < MIN_NUMBER) {
-            try {
+            try { //использование кастомного исключения
                 throw new NotEnoughFlowersException("Not enough flowers for the bouquet!!!");
             } catch (NotEnoughFlowersException e) {
                 e.printStackTrace();
@@ -44,6 +44,7 @@ public class Bouquet implements Presentable{
         return wrapper;
     }
 
+    //Переопределенные методы
     @Override
     public boolean equals(Object o) {
         if (this == o){
@@ -80,6 +81,7 @@ public class Bouquet implements Presentable{
         System.out.println("You may present " + this);
     }
 
+    //Внутренний класс
     public static class Wrapper {
         private Colour colour;
         private double length;
@@ -108,6 +110,7 @@ public class Bouquet implements Presentable{
                 '}';
     }
 
+    //Итератор
     public void showFlowers() {
         List<Flower> exhibits = getFlowers();
         Iterator<Flower> iterator = exhibits.iterator();

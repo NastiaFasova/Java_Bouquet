@@ -31,4 +31,9 @@ public enum TypeOfFlower {
         }
         return stringBuilder.substring(0, stringBuilder.length() - 2);
     }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase();
+    }
 }
