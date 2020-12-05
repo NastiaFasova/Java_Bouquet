@@ -20,7 +20,7 @@ public class MockitoTest {
         when(myFlower.getTypeOfFlower()).thenReturn(TypeOfFlower.ROSE);
         Bouquet bouquet = florist.createBouquet(flowers, myWrapper);
         Assert.assertEquals(flowers, bouquet.getFlowers());
-        verify(myFlower).getTypeOfFlower();
+        verify(myFlower, times(6)).getTypeOfFlower();
     }
 
     @Test(expected = NotEnoughFlowersException.class)
@@ -29,6 +29,6 @@ public class MockitoTest {
         when(myFlower.getTypeOfFlower()).thenReturn(TypeOfFlower.ROSE);
         Bouquet bouquet = florist.createBouquet(flowers, myWrapper);
         Assert.assertEquals(flowers, bouquet.getFlowers());
-        verify(myFlower).getTypeOfFlower();
+        verify(myFlower).getTypeOfFlower().getPrice();
     }
 }

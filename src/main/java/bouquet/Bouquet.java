@@ -18,7 +18,7 @@ public class Bouquet implements Presentable {//имплементация инт
     public Bouquet(List<Flower> flowers, Wrapper wrapper) {
         this.flowers = flowers;
         this.wrapper = wrapper;
-        //setPrice(getSumOfBouquetStreamMethod());
+        setPrice(getSumOfBouquetStreamMethod());
     }
 
     public Bouquet() {
