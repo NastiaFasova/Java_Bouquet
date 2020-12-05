@@ -1,79 +1,74 @@
 package bouquet;
 
-import bouquet.exception.NotEnoughFlowersException;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.util.Iterator;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Data
+@EqualsAndHashCode
 public class Bouquet implements Presentable {//имплементация интерфейса
-    private static final int MIN_NUMBER = 3;
     private List<Flower> flowers;
     private Wrapper wrapper;
     private double price;
 
-    public Bouquet(List<Flower> flowers, Wrapper wrapper, double price) {
-        if (flowers.size() < MIN_NUMBER) {
-            try { //использование кастомного исключения
-                throw new NotEnoughFlowersException("Not enough flowers for the bouquet!!!");
-            } catch (NotEnoughFlowersException e) {
-                e.printStackTrace();
-            }
-        }
-        this.flowers = flowers;
-        this.wrapper = wrapper;
-        this.price = price;
-    }
-
     public Bouquet(List<Flower> flowers, Wrapper wrapper) {
         this.flowers = flowers;
         this.wrapper = wrapper;
+        //setPrice(getSumOfBouquetStreamMethod());
     }
 
     public Bouquet() {
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public double getSumOfBouquetStreamMethod() {
+        double price = getFlowers()
+                .stream()
+                .map(f -> f.getTypeOfFlower().getPrice())
+                .reduce(0D, Double::sum);
+        setPrice(price);
+        return price;
     }
 
-    public List<Flower> getFlowers() {
-        return flowers;
+    public Flower getTheMostExpensiveFlower() {
+        return getFlowers()
+                .stream()
+                .max(Comparator.comparing(f -> f.getTypeOfFlower().getPrice()))
+                .orElseThrow(RuntimeException::new);
     }
 
-    public Wrapper getWrapper() {
-        return wrapper;
+    public Flower getTheCheapestFlower() {
+        return getFlowers()
+                .stream()
+                .min(Comparator.comparing(f -> f.getTypeOfFlower().getPrice()))
+                .orElseThrow(RuntimeException::new);
     }
 
-    //Переопределенные методы
-    @Override
-    public boolean equals(Object o) {
-        if (this == o){
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Bouquet bouquet = (Bouquet) o;
-
-        if (Double.compare(bouquet.price, price) != 0) {
-            return false;
-        }
-        if (flowers != null ? !flowers.equals(bouquet.flowers) : bouquet.flowers != null) {
-            return false;
-        }
-        return wrapper != null ? wrapper.equals(bouquet.wrapper) : bouquet.wrapper == null;
+    public Double getTheAveragePriceOfBouquets() {
+        return getFlowers()
+                .stream()
+                .mapToDouble(f -> f.getTypeOfFlower().getPrice())
+                .average()
+                .orElseThrow(RuntimeException::new);
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = flowers != null ? flowers.hashCode() : 0;
-        result = 31 * result + (wrapper != null ? wrapper.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+    public Map<String, List<Flower>> getAppropriateFlowers(Colour color) {
+        Map<String, List<Flower>> map = new HashMap<>();
+        List<Flower> appropriateFlowers = getFlowers()
+                .stream()
+                .filter(f -> f.getColour().equals(color))
+                .collect(Collectors.toList());
+        map.put("Подходит", appropriateFlowers);
+        List<Flower> notAppropriateFlowers = getFlowers()
+                .stream()
+                .filter(e -> !appropriateFlowers.contains(e))
+                .collect(Collectors.toList());
+        map.put("Не подходит", notAppropriateFlowers);
+        map.forEach((k, v) -> System.out.println(k + ": " + v));
+        return map;
     }
 
     @Override
@@ -99,15 +94,6 @@ public class Bouquet implements Presentable {//имплементация инт
                     ", width=" + width +
                     '}';
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Bouquet{" +
-                "flowers=" + flowers +
-                ", wrapper=" + wrapper +
-                ", price=" + price +
-                '}';
     }
 
     //Итератор
