@@ -29,6 +29,18 @@ public class Florist extends Employee {
         return bouquet;
     }
 
+    public double sellBouquets(List<Bouquet> bouquets) {
+        double sum = 0;
+        for (Bouquet bouquet : bouquets) {
+            if (bouquet.getFlowers().size() < MIN_NUMBER) {
+                throw new NotEnoughFlowersException("Not enough flowers for the bouquet!!!");
+            }
+            setPrice(bouquet);
+            sum += bouquet.getPrice();
+        }
+        return sum;
+    }
+
     private double setPrice(Bouquet bouquet) {
         List<Flower> flowers = bouquet.getFlowers();
         double price = 0;
