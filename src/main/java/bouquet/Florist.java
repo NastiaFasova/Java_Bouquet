@@ -17,6 +17,9 @@ public class Florist extends Employee {
         super(name, surname, experience, age);
     }
 
+    public Florist() {
+    }
+
     public Bouquet createBouquet(List<Flower> flowers, Bouquet.Wrapper wrapper) {
         if (flowers.size() < MIN_NUMBER) {
             throw new NotEnoughFlowersException("Not enough flowers for the bouquet!!!");

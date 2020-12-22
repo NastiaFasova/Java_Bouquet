@@ -22,6 +22,9 @@ public abstract class Employee {
         this.age = age;
     }
 
+    public Employee() {
+    }
+
     public String work() {
         return "I'm working";
     }

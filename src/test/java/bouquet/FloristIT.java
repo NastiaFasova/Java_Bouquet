@@ -3,16 +3,24 @@ package bouquet;
 import bouquet.exception.NotEnoughFlowersException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class MockitoTest {
-    private Flower myFlower = mock(Flower.class);
-    private Bouquet.Wrapper myWrapper = mock(Bouquet.Wrapper.class);
-    private Florist florist = new Florist("David", "Hlushko", 5, 45);
+@RunWith(MockitoJUnitRunner.class)
+public class FloristIT {
+    @Mock
+    private Flower myFlower;
+    @Mock
+    private Bouquet.Wrapper myWrapper;
+    @Spy
+    private Florist florist;
 
     @Test
     public void CreateBouquet_ReturnsBouquet_Ok() {
